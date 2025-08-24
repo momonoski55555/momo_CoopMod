@@ -1,0 +1,18 @@
+[package]
+name = "rust_module"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+interprocess = "2.2.3"
+tokio = "1.47.1"
+winapi = { version = "0.3.9", features = [
+    "winbase",
+    "handleapi",
+    "fileapi",
+    "winnt",
+    "namedpipeapi",
+    "minwindef", # For DWORD, FALSE, LPVOID, WINBOOL, INVALID_HANDLE_VALUE
+    "errhandlingapi", # For GetLastError
+    "winerror", # For ERROR_BROKEN_PIPE
+]}
