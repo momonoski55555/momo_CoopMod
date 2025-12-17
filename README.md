@@ -14,10 +14,15 @@ here https://www.dropbox.com/developers/
 click create app and fill the questions and click create app
 
 <img width="1490" height="742" alt="Pasted image 20251217181515" src="https://github.com/user-attachments/assets/5d658e4f-9bff-4879-9745-8818ec1837e0" />
-go here
+
+answer the questions and click create app
+
 <img width="376" height="152" alt="Pasted image 20251217181627" src="https://github.com/user-attachments/assets/010aa84c-21d5-42fc-94d7-765856207e11" />
+
 generate the token then go into server then in config.toml and paste it here
+
 <img width="1156" height="275" alt="Pasted image 20251217191325" src="https://github.com/user-attachments/assets/83a29f0b-0ee9-49eb-8344-494adca35fe5" />
+
 # **How to use**
 Run server.exe in the server folder.
 and launch medieval 2 from the eop gui.exe not the from steam.
