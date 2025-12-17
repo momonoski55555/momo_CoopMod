@@ -48,22 +48,7 @@ it uploads your saves to dropbox cloud then have other players download it
 # Disclaimer: 
 this mod has alot of aspects that are unfinished like 
 -logging
+-automatic battle transfers
 -battle transfer results
-Momo
-
- — 12/14/2025 6:35 PM
-(file names) 
-Momo
-
- — 12/14/2025 6:32 PM
-fix the quirks
-Momo
-
-
-automate tasks more
-Momo
-dropbox visualizer
-Momo
-
- — 12/14/2025 6:31 PM
-upload battle to folder
+-dropbox dashboard gui
+-automate more tasks
