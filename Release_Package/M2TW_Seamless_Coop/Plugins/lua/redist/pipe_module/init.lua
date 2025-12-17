@@ -1,6 +1,8 @@
 -- redist/pipe_module/init.lua
 -- This module encapsulates named pipe client functionality.
 
+-- an interface with the pipe.dll(should be renamed)
+
 local ffi = require("ffi")
 
 -- Define the C structure and function signature (must match C DLL header)
