@@ -1,9 +1,8 @@
 <img width="2248" height="768" alt="mcmo" src="https://github.com/user-attachments/assets/5a068fe6-c790-4896-9a47-312b7f0293ad" />
 
+**Momo's Coop Mod**: this a campaign mod for medieval 2 aimed to make it possible to play campaign online with online battles without manually transferring save file between computers. 
 
-**Momo's Coop Mod**: this a campaign mod for medieval 2 aimed to make it possible to play campaign online with online battles without manually transferring save file between computers 
-
-Discord: coming soon
+Discord: coming soon.
 
 # **How to install**
 1. Open your Mod folder (e.g., mods/crusades).
@@ -11,9 +10,7 @@ Discord: coming soon
 3. put the 'Plugins' folder from this package into 'youneuoy_Data/plugins'.
    - It should look like: youneuoy_Data/plugins/lua/LuaPluginScript.lua
    - And: youneuoy_Data/plugins/lua/redist/pipe_module/
-Now you should have everything setup now you need to setup the dropbox
-
-here https://www.dropbox.com/developers/
+Now you should have everything setup now you need to setup the dropbox here. -> https://www.dropbox.com/developers/
 
 click create app and fill the questions and click create app
 
@@ -23,7 +20,7 @@ answer the questions and click create app
 
 <img width="376" height="152" alt="Pasted image 20251217181627" src="https://github.com/user-attachments/assets/010aa84c-21d5-42fc-94d7-765856207e11" />
 
-generate the token then go into server then in config.toml and paste it here
+generate the token then go into server then in config.toml and paste it here **NOTE**: Token's expire every 4 hours by the way 
 
 <img width="1156" height="275" alt="Pasted image 20251217191325" src="https://github.com/user-attachments/assets/83a29f0b-0ee9-49eb-8344-494adca35fe5" />
 
@@ -47,9 +44,26 @@ it uploads your saves to dropbox cloud then have other players download it
 **401**: means your token is bad regenerate it
 
 # Disclaimer: 
-this mod has alot of aspects that are unfinished like 
+**this mod is still in very early development** this mod has alot of aspects that are unfinished 
+
+## AI
+initially the project was made by hand. then i used ai when it became confusing to fix issues (i am really not good at rust but i really want this mod to be made). i used ai to make the C_module.
+
+# The future
+i want to stop using dropbox for other reasons mainly token's, not having enough control over everything and logic 
+
+-rewrite the pipe code
+
 -logging
--automatic battle transfers
--battle transfer results
--dropbox dashboard gui
--automate more tasks
+
+-automatic battle/results transfers
+
+-campaign conig/admin gui
+
+-chat
+
+-player diplomacy
+
+-player analytics
+
+
