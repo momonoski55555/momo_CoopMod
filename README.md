@@ -41,11 +41,16 @@ look in the console and see if it says error troubleshoot with the error code
 it uses m2tweop to notify a rust app to upload your saves to dropbox cloud then have other players download it.
 
 # Troubleshooting guide
-**401**: means your token is bad regenerate it
+**401**: means your token is bad regenerate it.
+
 **2** : File Not Found (pipe server not running OR pipe name mismatch).
+
 **5** : Access Denied (check permissions).
+
 **231** : Pipe Busy (server not accepting connections).
+
 **109** : Broken Pipe (connection terminated).
+
 **53** : Network Path Not Found (not applicable for local pipes).
 
 # Disclaimer: 
