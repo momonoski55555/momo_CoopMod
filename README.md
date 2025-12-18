@@ -38,7 +38,7 @@ if not the save not won't be able to be uploaded
 look in the console and see if it says error troubleshoot with the error code
 
 # **How it works**
-it uploads your saves to dropbox cloud then have other players download it 
+it uses m2tweop to notify a rust app to upload your saves to dropbox cloud then have other players download it.
 
 # Troubleshooting guide
 **401**: means your token is bad regenerate it
@@ -47,12 +47,16 @@ it uploads your saves to dropbox cloud then have other players download it
 **this mod is still in very early development** this mod has alot of aspects that are unfinished 
 
 ## AI
-initially the project was made by hand. then i used ai when it became confusing to fix issues (i am really not good at rust but i really want this mod to be made). i used ai to make the C_module.
+initially the project was made by hand. then i used ai when it became confusing to fix issues (thats why the code looks like ai code i had a lot of issues). i used ai to make the pipe code.
 
 # The future
 i want to stop using dropbox for other reasons mainly token's, not having enough control over everything and logic 
 
 -rewrite the pipe code
+
+-full rewrite
+
+-file restructure
 
 -logging
 
