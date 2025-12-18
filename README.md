@@ -42,6 +42,11 @@ it uses m2tweop to notify a rust app to upload your saves to dropbox cloud then 
 
 # Troubleshooting guide
 **401**: means your token is bad regenerate it
+**2** : File Not Found (pipe server not running OR pipe name mismatch).
+**5** : Access Denied (check permissions).
+**231** : Pipe Busy (server not accepting connections).
+**109** : Broken Pipe (connection terminated).
+**53** : Network Path Not Found (not applicable for local pipes).
 
 # Disclaimer: 
 **this mod is still in very early development** this mod has alot of aspects that are unfinished 
@@ -50,24 +55,24 @@ it uses m2tweop to notify a rust app to upload your saves to dropbox cloud then 
 initially the project was made by hand. then i used ai when it became confusing to fix issues (thats why the code looks like ai code i had a lot of issues). i used ai to make the pipe code.
 
 # The future
-i want to stop using dropbox for other reasons mainly token's, not having enough control over everything and logic 
+i want to stop using dropbox for other reasons mainly token's, not having enough control over everything and logic.
 
--rewrite the pipe code
+rewrite the pipe code ❌
 
--full rewrite
+full rewrite ❌
 
--file restructure
+file restructure ❌
 
--logging
+logging ❌
 
--automatic battle/results transfers
+automatic battle/results transfers ❌
 
--campaign conig/admin gui
+campaign conig/admin gui ❌
 
--chat
+chat ❌
 
--player diplomacy
+player diplomacy ❌
 
--player analytics
+player analytics ❌
 
 
