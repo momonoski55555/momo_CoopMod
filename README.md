@@ -1,4 +1,5 @@
-<img width="2048" height="768" alt="mcm" src="https://github.com/user-attachments/assets/af5bb54d-c940-4d31-b58a-ff586ac236e4" />
+<img width="2248" height="768" alt="mcmo" src="https://github.com/user-attachments/assets/5a068fe6-c790-4896-9a47-312b7f0293ad" />
+
 
 **Momo's Coop Mod**: this a campaign mod for medieval 2 aimed to make it possible to play campaign online with online battles without manually transferring save file between computers 
 
