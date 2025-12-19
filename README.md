@@ -54,7 +54,7 @@ it uses m2tweop to notify a rust app to upload your saves to dropbox cloud then 
 **53** : Network Path Not Found (not applicable for local pipes).
 
 # Disclaimer: 
-**this mod is still in very early development** this mod has alot of aspects that are unfinished 
+**this mod is still in very early development** this mod has alot of aspects that are unfinished.
 
 ## AI
 initially the project was made by hand. then i used ai when it became confusing to fix issues (thats why the code looks like ai code i had a lot of issues). i used ai to make the pipe code.
