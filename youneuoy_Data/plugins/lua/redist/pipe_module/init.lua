@@ -12,7 +12,7 @@ ffi.cdef[[
         unsigned long error_code; // DWORD is unsigned long on Windows
     } PipeResult;
 
-    __declspec(dllimport) int ConnectToPipe(const char* pipeName, const char* messageToSend, PipeResult* result);
+    __declspec(dllimport) int CallPipeServer(const char* pipeName, const char* messageToSend, PipeResult* result);
 ]]
 
 local M = {} -- Our module table
@@ -36,7 +36,7 @@ print("✓ Successfully loaded DLL from: " .. DLL_FULL_PATH) -- Debugging output
 function M.connect(pipe_name, message_to_send)
     local result = ffi.new("PipeResult[1]")
     
-    local success_code = pipe_client_dll_loader.ConnectToPipe(pipe_name, message_to_send, result)
+    local success_code = pipe_client_dll_loader.CallPipeServer(pipe_name, message_to_send, result)
     
     local output = {
         success = (success_code ~= 0),

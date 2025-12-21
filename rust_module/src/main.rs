@@ -31,7 +31,7 @@ use winapi::um::winbase::{
 use dropbox_service::DropboxService;
 use serde_derive::Deserialize;
 
-const PIPE_NAME: &str = "\\\\.\\pipe\\cruesader_pipe";
+const PIPE_NAME: &str = "\\\\.\\pipe\\coop_pipe";
 const BUFFER_SIZE: usize = 1024;
 
 // --- Config Struct ---
