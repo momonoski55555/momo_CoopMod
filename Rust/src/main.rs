@@ -233,7 +233,7 @@ fn run_server(dropbox_token: Option<String>, save_dir: &str) -> Result<(), Box<d
                     }
                 }
             } else {
-                println!("[Server] Unknown command");
+                println!("[Server] Unknown command {}" , msg);
                 let _ = write_to_pipe(pipe_handle, b"UNKNOWN_CMD");
             }
         }

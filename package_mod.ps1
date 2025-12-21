@@ -2,7 +2,7 @@
 $ErrorActionPreference = "Stop"
 
 $workspaceRoot = "c:\Users\ENG AHMAD\Documents\Project_momo\M2TW_seamlessCoop"
-$rustDir = "$workspaceRoot\rust_module"
+$rustDir = "$workspaceRoot\rust"
 $luaPluginDir = "C:\Program Files (x86)\Steam\steamapps\common\Medieval II Total War\mods\crusades\youneuoy_Data\plugins\lua"
 
 # Output Directory
