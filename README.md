@@ -26,16 +26,16 @@ generate the token then go into server then in config.toml and paste it here **N
 
 # **How to use**
 Run server.exe in the server folder.
-and launch medieval 2 from the eop gui.exe not the from steam.
+and launch medieval 2 from the M2TWEOP gui.exe not the from steam.
 
 while your playing a menu like this would appear.
 <img width="1079" height="712" alt="Pasted image 20251217220554" src="https://github.com/user-attachments/assets/3e4abcf6-16d2-480f-9c02-7b3cf9ab1e1f" />
-After you end your turn **YOU SHOULD NAME YOUR SAVE QUICKSAVE NOT ANYTHING ELSE**.
-if not the save not won't be able to be uploaded
+After you end your turn **YOU SHOULD NAME YOUR SAVE QUICKSAVE NOT ANYTHING ELSE**
+if not the save not won't be able to be uploaded.
 
 <img width="482" height="277" alt="Pasted image 20251217223244" src="https://github.com/user-attachments/assets/10910f39-bdc1-49eb-8be7-dffe08d0305c" />
 
-look in the console and see if it says error troubleshoot with the error code
+look in the console and see if it says error troubleshoot with the error code.
 
 # **How it works**
 it uses m2tweop to notify a rust app to upload your saves to dropbox cloud then have other players download it.
@@ -53,8 +53,10 @@ it uses m2tweop to notify a rust app to upload your saves to dropbox cloud then 
 
 **53** : Network Path Not Found (not applicable for local pipes).
 
-# Disclaimer: 
+# Disclaimer
 **this mod is still in very early development** this mod has alot of aspects that are unfinished.
+
+# **How to contribute**
 
 ## AI
 initially the project was made by hand. then i used ai when it became confusing to fix issues (thats why the code looks like ai code i had a lot of issues). i used ai to make the pipe code.
