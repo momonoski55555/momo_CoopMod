@@ -28,7 +28,7 @@ typedef struct {
 BOOL WINAPI DllMain(HINSTANCE hinstDLL, DWORD fdwReason, LPVOID lpvReserved) {
     switch (fdwReason) {
     case DLL_PROCESS_ATTACH:
-        // DLL is being loaded
+        // DLL is being loaded`
         break;
     case DLL_PROCESS_DETACH:
         // DLL is being unloaded
