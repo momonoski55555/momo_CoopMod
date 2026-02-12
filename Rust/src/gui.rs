@@ -27,9 +27,7 @@ impl CoopApp {
 
     fn start_server(&mut self) {
         let token = self.config.dropbox_token.clone().unwrap_or_default();
-        let save_dir = self.config.save_dir.clone().unwrap_or_else(|| {
-            "C:\\Program Files (x86)\\Steam\\steamapps\\common\\Medieval II Total War\\mods\\crusades\\saves".to_string()
-        });
+        let save_dir = self.config.save_dir.clone().unwrap_or_default();
 
         if token.is_empty() {
             self.logs
@@ -80,6 +78,20 @@ impl eframe::App for CoopApp {
                     let mut dir = self.config.save_dir.clone().unwrap_or_default();
                     if ui.text_edit_singleline(&mut dir).changed() {
                         self.config.save_dir = Some(dir);
+                    }
+                    if ui
+                        .button("🔍 Detect")
+                        .on_hover_text("Try to find game path in Registry")
+                        .clicked()
+                    {
+                        if let Some(detected) = Config::detect_save_dir() {
+                            self.config.save_dir = Some(detected);
+                            self.logs
+                                .push("Game path detected successfully.".to_string());
+                        } else {
+                            self.logs
+                                .push("Could not detect game path automatically.".to_string());
+                        }
                     }
                 });
             });

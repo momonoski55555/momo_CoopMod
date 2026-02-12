@@ -36,13 +36,30 @@ pub struct Config {
 
 impl Config {
     pub fn load() -> Self {
-        fs::read_to_string("config.toml")
+        let mut cfg = fs::read_to_string("config.toml")
             .ok()
             .and_then(|content| toml::from_str(&content).ok())
             .unwrap_or(Config {
                 dropbox_token: None,
                 save_dir: None,
-            })
+            });
+
+        if cfg.save_dir.is_none() {
+            cfg.save_dir = Self::detect_save_dir();
+        }
+
+        cfg
+    }
+
+    pub fn detect_save_dir() -> Option<String> {
+        use winreg::RegKey;
+        use winreg::enums::*;
+
+        let hklm = RegKey::predef(HKEY_LOCAL_MACHINE);
+        hklm.open_subkey("SOFTWARE\\WOW6432Node\\Sega\\Medieval II Total War")
+            .ok()
+            .and_then(|key| key.get_value::<String, _>("AppPath").ok())
+            .map(|path| format!("{}\\{}", path, "mods\\crusades\\saves"))
     }
 }
 
