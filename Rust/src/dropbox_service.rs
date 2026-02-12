@@ -1,4 +1,3 @@
-
 use rust_dropbox::client::DBXClient;
 use rust_dropbox::{UploadMode, UploadOptionBuilder};
 use std::error::Error;
@@ -30,7 +29,7 @@ impl DropboxService {
     }
 
     /// Uploads a file.
-    /// Logic: Renames local file -> Uploads -> Returns Success
+    /// Logic: Reads local file -> Uploads -> Returns Success
     pub fn handle_turn_upload(
         &self,
         local_path: &str,
@@ -39,29 +38,18 @@ impl DropboxService {
         let path = Path::new(local_path);
 
         if !path.exists() {
-            return Err("Save file does not exist locally".into());
+            return Err(format!("Save file not found at: {}", local_path).into());
         }
-        // note the path gets check for turn_x value even though its quicksave 
 
-        // 1. Logic: Rename file to turn number (e.g., turn_5.sav)
-        let file_name = format!("turn_{}.sav", turn_number);
-        let parent_dir = path.parent().unwrap_or(Path::new("./"));
-        let new_local_path = parent_dir.join(&file_name);
-
-        println!("[Service] Renaming {:?} to {:?}", path, new_local_path);
-        std::fs::rename(path, &new_local_path)?;
-
-        // 2. Read file contents
-        let mut file = File::open(&new_local_path)?;
+        // 1. Read file contents
+        let mut file = File::open(path)?;
         let mut contents = Vec::new();
         file.read_to_end(&mut contents)?;
 
-        // 3. Upload to Dropbox
+        // 2. Upload to Dropbox
+        let file_name = format!("turn_{}.sav", turn_number);
         let dropbox_dest = format!("/highest_numbered_files/{}", file_name);
-        println!("[Service] Uploading to {}", dropbox_dest);
 
-        // Upload mode: Overwrite if it exists
-        // Build UploadOption using UploadOptionBuilder with Overwrite mode
         let upload_option = UploadOptionBuilder::new()
             .set_upload_mode(UploadMode::Overwrite)
             .build();
@@ -74,7 +62,7 @@ impl DropboxService {
     }
 
     /// Downloads the save file.
-    /// Logic: Download -> Save to disk -> Return Path
+    /// Logic: Download -> Save as quicksave.sav -> Return Path
     pub fn download_save(
         &self,
         turn_number: &str,
@@ -83,19 +71,16 @@ impl DropboxService {
         let file_name = format!("turn_{}.sav", turn_number);
         let dropbox_path = format!("/highest_numbered_files/{}", file_name);
 
-        println!("[Service] Downloading {}", dropbox_path);
-
         // 1. Download content
         let content = self
             .client
             .download(&dropbox_path)
             .map_err(|e| format!("Dropbox error: {:?}", e))?;
 
-        // 2. Save locally
-        let save_path = Path::new(target_dir).join(&file_name);
+        // 2. Save locally as quicksave.sav so the game's load function works
+        let save_path = Path::new(target_dir).join("quicksave.sav");
         std::fs::write(&save_path, content)?;
 
         Ok(save_path.to_string_lossy().into_owned())
     }
-
 }
