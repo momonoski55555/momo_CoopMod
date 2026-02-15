@@ -1,6 +1,7 @@
 <img width="2248" height="768" alt="mcmo" src="https://github.com/user-attachments/assets/5a068fe6-c790-4896-9a47-312b7f0293ad" />
 
-**Momo's Coop Mod**: this a campaign mod for medieval 2 aimed to make it possible to play campaign online with online battles without manually transferring save file between computers. 
+**Momo's Coop Mod**: a **Tool** that simplifies the process of playing campaign for the game medieval total war 2.
+playing M2TW campaign online aka hotseat is virtually unplayable in my opinion thats why i make mcm to elevieate this issue by making upload and sync the saves automatically instead of manually transferring save file between computers. 
 
 Discord: https://discord.gg/gWRagQct.
 
@@ -57,6 +58,7 @@ it uses m2tweop to notify a rust app to upload your saves to dropbox cloud then 
 **this mod is still in very early development** this mod has alot of aspects that are unfinished.
 
 # **How to contribute**
+pretty standard stuff make a branch make the changes pull request
 
 ## AI
 initially the project was made by hand. then i used ai when it became confusing to fix issues (thats why the code looks like ai code i had a lot of issues). i used ai to make the pipe code.
@@ -78,5 +80,3 @@ chat ❌
 player diplomacy ❌
 
 player analytics ❌
-
-
