@@ -1,0 +1,347 @@
+# EduFusion: Full Ground-Up Modular Rewrite Plan
+
+## Goal
+
+Rewrite the app so that:
+1. **Every module** (students, academics, finance, etc.) can be modified, removed, or added by hand **without touching other modules**.
+2. **Every file** is focused (<200 lines), with a single responsibility.  
+3. **The app never crashes** from a missing feature — graceful fallbacks everywhere.
+4. **Adding a new module** is a 5-step, copy-paste process.
+5. Design system, security, and clean-code principles are enforced structurally.
+
+---
+
+## Current State Analysis
+
+| Area | Problem |
+|---|---|
+| **router.dart** | 512-line monolith importing **all 100+ pages**. One broken import = build failure. |
+| **Screens** | Several >200 lines, mixing business logic with UI. |
+| **Routes** | All in one file. No module isolation. |
+| **Side menu** | [side_menu_data.dart](file:///c:/Users/ENG%20AHMAD/Documents/GitHub/edufusion/lib/data/side_menu_data.dart) is a 23KB single file. |
+| **BLoC** | Some blocs have mixed Event/State in single file. |
+| **DI / get_it** | Services registered ad-hoc, no module-scoped DI. |
+| **No module contract** | Nothing enforces the interface that a new module must implement. |
+
+---
+
+## User Review Required
+
+> [!IMPORTANT]
+> **This plan is a rewrite strategy, not a bug fix.** I will NOT delete working code — every change is additive/refactoring. All changes are made one module at a time so the app keeps running throughout. **Phases 1–3 are pure scaffolding (no user-visible change).** Phases 4–9 are per-module refactors.
+
+> [!WARNING]
+> **[router.gr.dart](file:///c:/Users/ENG%20AHMAD/Documents/GitHub/edufusion/lib/routes/router.gr.dart) is auto-generated** — we never edit it by hand. After any route structure change, we run `dart run build_runner build` to regenerate it.
+
+---
+
+## Proposed Changes
+
+### Phase 1 — Module Registration Contract
+
+The core innovation: every module must declare a `FeatureModule` that exports its routes, sidebar entry, and DI registrations. This way, [router.dart](file:///c:/Users/ENG%20AHMAD/Documents/GitHub/edufusion/lib/routes/router.dart) and [side_menu_data.dart](file:///c:/Users/ENG%20AHMAD/Documents/GitHub/edufusion/lib/data/side_menu_data.dart) never need to change to add a new module.
+
+---
+
+#### [NEW] `lib/core/modules/feature_module.dart`
+
+Abstract base that every module must implement:
+
+```dart
+abstract class FeatureModule {
+  // The auto_route route for this module's shell
+  AutoRoute get route;
+  
+  // Sidebar entry (icon, label, path)
+  SidebarEntry get sidebarEntry;
+  
+  // Called once at app startup to register DI
+  void registerDependencies(GetIt sl);
+}
+```
+
+#### [NEW] `lib/core/modules/module_registry.dart`
+
+A single place that lists all active modules:
+
+```dart
+class ModuleRegistry {
+  static final List<FeatureModule> modules = [
+    StudentsModule(),
+    StaffModule(),
+    AcademicsModule(),
+    FinanceModule(),
+    ExamsModule(),
+    AttendanceModule(),
+    CommunicationModule(),
+    SettingsModule(),
+    ReportsModule(),
+  ];
+}
+```
+
+→ To add a new module: add one line here. To remove a module: remove one line. Nothing else needs to change.
+
+#### [MODIFY] [lib/routes/router.dart](file:///c:/Users/ENG%20AHMAD/Documents/GitHub/edufusion/lib/routes/router.dart)
+
+Router rebuilds its route list from `ModuleRegistry`:
+
+```dart
+@override
+List<AutoRoute> get routes => [
+  AutoRoute(page: LoginRoute.page, path: '/login'),
+  AutoRoute(
+    page: MainRoute.page,
+    path: '/',
+    initial: true,
+    children: ModuleRegistry.modules.map((m) => m.route).toList(),
+  ),
+];
+```
+
+**Result: router.dart goes from 512 lines → ~30 lines.**
+
+#### [MODIFY] [lib/data/side_menu_data.dart](file:///c:/Users/ENG%20AHMAD/Documents/GitHub/edufusion/lib/data/side_menu_data.dart)
+
+Replace hardcoded list with:
+```dart
+List<SidebarEntry> get sidebarEntries =>
+    ModuleRegistry.modules.map((m) => m.sidebarEntry).toList();
+```
+
+---
+
+### Phase 2 — Per-Module Route Files
+
+Each module gets its own route file. Example for Students:
+
+#### [NEW] `lib/presentation/screens/students/students_module.dart`
+
+```dart
+class StudentsModule implements FeatureModule {
+  @override
+  AutoRoute get route => AutoRoute(
+    page: StudentsShellRoute.page,
+    path: 'students',
+    children: StudentsRoutes.children,
+  );
+
+  @override
+  SidebarEntry get sidebarEntry => const SidebarEntry(
+    icon: Icons.people_alt_outlined,
+    label: 'Students',
+    path: '/students',
+  );
+
+  @override
+  void registerDependencies(GetIt sl) {
+    sl.registerLazySingleton<StudentRepository>(() => StudentRepositoryImpl(sl()));
+  }
+}
+```
+
+#### [NEW] `lib/presentation/screens/students/students_routes.dart`
+
+Contains only the `children` list for the students shell. Zero imports from other modules.
+
+**Repeat this pattern for every module:**
+
+| Module | Module File | Routes File |
+|---|---|---|
+| Students | `students_module.dart` | `students_routes.dart` |
+| Staff | `staff_module.dart` | `staff_routes.dart` |
+| Finance | `finance_module.dart` | `finance_routes.dart` |
+| Academics | `academics_module.dart` | `academics_routes.dart` |
+| Exams | `exams_module.dart` | `exams_routes.dart` |
+| Attendance | `attendance_module.dart` | `attendance_routes.dart` |
+| Communication | `communication_module.dart` | `communication_routes.dart` |
+| Settings | `settings_module.dart` | `settings_routes.dart` |
+| Reports | `reports_module.dart` | `reports_routes.dart` |
+
+---
+
+### Phase 3 — Core Layer Hardening
+
+#### [MODIFY] [lib/core/theme/edu_colors.dart](file:///c:/Users/ENG%20AHMAD/Documents/GitHub/edufusion/lib/core/theme/edu_colors.dart)
+
+No changes needed — already correct. ✅
+
+#### [MODIFY] [lib/core/theme/design_tokens.dart](file:///c:/Users/ENG%20AHMAD/Documents/GitHub/edufusion/lib/core/theme/design_tokens.dart)
+
+No changes needed — already correct. ✅
+
+#### [NEW] `lib/core/widgets/edu_page_shell.dart`
+
+Standard wrapper used by ALL pages. Prevents crashes from missing scaffold:
+
+```dart
+class EduPageShell extends StatelessWidget {
+  final String title;
+  final Widget body;
+  final List<Widget>? actions;
+  // ...
+}
+```
+
+**Every screen uses `EduPageShell` instead of raw `Scaffold`.** This means if we change the app's page structure once, all pages update automatically.
+
+#### [NEW] `lib/core/widgets/edu_error_boundary.dart`
+
+Wraps each module shell so a crash in one feature doesn't crash the whole app:
+
+```dart
+class EduErrorBoundary extends StatefulWidget {
+  // Catches errors in subtree, shows EduEmptyState fallback
+}
+```
+
+---
+
+### Phase 4 — Screen File Audit & Splitting
+
+**Rule:** No screen file > 200 lines. No file mixes UI with business logic.
+
+For each oversized screen, split into:
+
+```
+screen_name_page.dart          # Main page widget (<100 lines)
+screen_name_body.dart          # Body content
+screen_name_widgets.dart       # Sub-widgets private to this screen
+```
+
+**Files to split (identified as likely >200 lines):**
+
+- [students_list_view.dart](file:///c:/Users/ENG%20AHMAD/Documents/GitHub/edufusion/lib/presentation/screens/students/students_list_view.dart) (243 lines) → split body out ✅ Priority
+- `create_student_form.dart` — likely large, audit needed
+- `exam_management.dart` — likely large, audit needed
+- `general_settings_crestwood_academy.dart` — likely large
+- `timetable_create_weekly_schedule.dart` — likely large
+- Any BLoC file mixing events + states
+
+---
+
+### Phase 5 — BLoC Cleanup
+
+**Rule:** Each BLoC gets **3 files**:
+- `module_event.dart` — all events
+- `module_state.dart` — all states  
+- `module_bloc.dart` — the Bloc class itself
+
+**Rule:** Every BLoC error state is handled. No `late` assignments that can throw.
+
+**Pattern for safe error handling:**
+
+```dart
+// WRONG — crashes on network failure
+emit(StudentsLoaded(students: data!));
+
+// RIGHT — always handles null
+if (data == null) {
+  emit(StudentError('Failed to load students'));
+  return;
+}
+emit(StudentsLoaded(students: data));
+```
+
+---
+
+### Phase 6 — Data Layer Audit
+
+#### [MODIFY] [lib/data/side_menu_data.dart](file:///c:/Users/ENG%20AHMAD/Documents/GitHub/edufusion/lib/data/side_menu_data.dart)
+
+Shrink to ~50 lines — delegate to `ModuleRegistry`.
+
+#### [MODIFY] `lib/data/repositories/`
+
+Every repository must have:
+1. **Abstract interface**: `student_repository.dart`
+2. **Implementation**: `student_repository_impl.dart`  
+3. **No raw Supabase calls in screens** — always through repository
+
+#### [MODIFY] `lib/data/services/`
+
+All services guarded:
+- Never return `null` without explicit null type (`T?`)
+- All Supabase calls use `school_id` in WHERE clause (RLS + defense-in-depth)
+
+---
+
+### Phase 7 — Widget Library
+
+#### Existing widgets to keep as-is (already good):
+- `EduButton` ✅
+- `EduTextField` ✅
+- `EduPageHeader` ✅
+- `EduEmptyState` ✅
+- `GlassContainer` ✅
+
+#### [NEW] widgets to add:
+- `EduPageShell` — standard Scaffold wrapper (Phase 3)
+- `EduErrorBoundary` — crash shield (Phase 3)
+- `EduLoadingState` — standardized loading indicator
+- `EduConfirmDialog` — replace all ad-hoc `showDialog` calls
+
+---
+
+### Phase 8 — Security Hardening
+
+Per the **frontend-security-coder** skill:
+
+| Area | Action |
+|---|---|
+| **Input validation** | All form fields use `InputValidator` (already exists in `lib/core/utils/`) |
+| **Auth guard** | All protected routes check `AuthBloc` state before rendering |
+| **Supabase RLS** | All queries must include `school_id` filter (defense-in-depth) |
+| **Secure storage** | Tokens stored in `flutter_secure_storage`, NOT `shared_preferences` |
+| **No `.env` in assets** | Already enforced in `pubspec.yaml` ✅ |
+| **Error messages** | Never expose raw database errors to users |
+
+---
+
+## Design System Compliance (ALL Phases)
+
+Per the **frontend-design** skill and GEMINI.md:
+
+- ❌ No hardcoded `Color(0xFF...)` values — use `EduColors.*`
+- ❌ No hardcoded `16.0` padding — use `DesignTokens.spacing16` or `ext.spacingM`
+- ❌ No raw `Material` widgets in screens — use Edu* variants
+- ✅ All pages use glassmorphism pattern via `GlassContainer` where appropriate
+- ✅ Theme extension always accessed via `EduDesignExtension.mustOf(context)`
+
+---
+
+## Verification Plan
+
+### Automated Verification
+
+```powershell
+# 1. Static analysis — must return zero errors
+cd c:\Users\ENG AHMAD\Documents\GitHub\edufusion
+flutter analyze --no-fatal-infos
+
+# 2. Run existing tests
+flutter test
+
+# 3. Build (debug) — must succeed
+flutter build apk --debug
+```
+
+### Manual Verification (after each phase)
+
+1. **Route isolation test**: Comment out one module in `ModuleRegistry.modules` → app must still launch and all other modules must still work.
+
+2. **Hot-reload test**: With app running (`flutter run`), modify any screen file and save → the app must hot-reload without crashing.
+
+3. **Navigation test**: Click every sidebar item → each must either show its page OR show a graceful `EduEmptyState` placeholder, never crash.
+
+4. **Error state test**: Disconnect from network → navigate to Students list → must show error state, not a blank/crashed screen.
+
+### Questions for You Before I Start
+
+1. **Phase priority**: Should I start with Phase 1 (the `FeatureModule` contract + router split) first so the architecture is right, or do you want quick wins on broken screens first?
+
+2. **Scope**: Do you want all 9 modules converted in one pass, or module-by-module (e.g., Students first, then Staff, etc.)?
+
+3. **Breaking changes allowed?**: The `router.gr.dart` regeneration requires running `build_runner`. Are you OK with me running that command as part of the work?
+
+4. **Design**: The existing design system is already solid. Should I keep the current glassmorphism / EduColors aesthetic exactly, or is there specific visual polish you want added during the rewrite?
