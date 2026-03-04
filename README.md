@@ -1,8 +1,9 @@
 <img width="2248" height="768" alt="mcmo" src="https://github.com/user-attachments/assets/5a068fe6-c790-4896-9a47-312b7f0293ad" />
 
-**Momo's Coop Mod**: this a campaign mod for medieval 2 aimed to make it possible to play campaign online with online battles without manually transferring save file between computers. 
+**Momo's Coop Mod**: a **Tool** that simplifies the process of playing campaign for the game medieval total war 2.
+playing M2TW campaign online aka hotseat is virtually unplayable in my opinion thats why i make mcm to elevieate this issue by making upload and sync the saves automatically instead of manually transferring save file between computers. 
 
-Discord: coming soon.
+Discord: https://discord.gg/gWRagQct.
 
 # **How to install**
 1. Open your Mod folder (e.g., mods/crusades).
@@ -41,7 +42,7 @@ look in the console and see if it says error troubleshoot with the error code.
 it uses m2tweop to notify a rust app to upload your saves to dropbox cloud then have other players download it.
 
 # Troubleshooting guide
-**401**: means your token is bad regenerate it.
+**401**: means your token is bad, regenerate it.
 
 **2** : File Not Found (pipe server not running OR pipe name mismatch).
 
@@ -57,29 +58,25 @@ it uses m2tweop to notify a rust app to upload your saves to dropbox cloud then 
 **this mod is still in very early development** this mod has alot of aspects that are unfinished.
 
 # **How to contribute**
+pretty standard stuff make a branch make the changes pull request
 
 ## AI
 initially the project was made by hand. then i used ai when it became confusing to fix issues (thats why the code looks like ai code i had a lot of issues). i used ai to make the pipe code.
+2026 me here i learned more about "vibe coding" and or coding with ai how to use skills, workflows, proper prompting and planning, never accept the first result 
 
 # The future
 i want to stop using dropbox for other reasons mainly token's, not having enough control over everything and logic.
 
 rewrite the pipe code ❌
 
-full rewrite ❌
-
-file restructure ❌
-
 logging ❌
 
 automatic battle/results transfers ❌
 
-campaign conig/admin gui ❌
+campaign conig/admin gui (in development)
 
 chat ❌
 
 player diplomacy ❌
 
 player analytics ❌
-
-
