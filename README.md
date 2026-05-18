@@ -5,6 +5,17 @@ playing M2TW campaign online aka hotseat is virtually unplayable in my opinion t
 
 Discord: https://discord.gg/gWRagQct.
 
+new changes incoming
+- an installer
+- multiplayer with friends that supports both steam and GOG
+- an enhances overall system with the registry stuff
+- complete rewrite
+- using dropbox for backups and it will be optional
+- ui will stay
+- a client that uses lan and or steam to get players in a session
+- dynamic save update meaning faster games
+- update to the latest M2TWeop 
+
 THESE WILL CHANGE IN NEW UPDATES
 # **How to install**
 1. Open your Mod folder (e.g., mods/crusades).
