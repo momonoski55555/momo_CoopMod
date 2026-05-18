@@ -1,10 +1,11 @@
 <img width="2248" height="768" alt="mcmo" src="https://github.com/user-attachments/assets/5a068fe6-c790-4896-9a47-312b7f0293ad" />
 
-**Momo's Coop Mod**: a **Tool** that simplifies the process of playing campaign for the game medieval total war 2.
-playing M2TW campaign online aka hotseat is virtually unplayable in my opinion thats why i make mcm to elevieate this issue by making upload and sync the saves automatically instead of manually transferring save file between computers. 
+**Momo's Coop Mod**: is a 3 part system that simplifies the process of playing campaign with people for the game medieval total war 2.
+playing M2TW campaign online aka hotseat is virtually unplayable in my opinion thats why i made mcm to elevieate this issue by making upload and sync the saves automatically instead of manually transferring save file between computers.
 
 Discord: https://discord.gg/gWRagQct.
 
+THESE WILL CHANGE IN NEW UPDATES
 # **How to install**
 1. Open your Mod folder (e.g., mods/crusades).
 2. Go to 'youneuoy_Data/plugins'.
@@ -25,7 +26,7 @@ generate the token then go into server then in config.toml and paste it here **N
 
 <img width="1156" height="275" alt="Pasted image 20251217191325" src="https://github.com/user-attachments/assets/83a29f0b-0ee9-49eb-8344-494adca35fe5" />
 
-# **How to use**
+## **How to use**
 Run server.exe in the server folder.
 and launch medieval 2 from the M2TWEOP gui.exe not the from steam.
 
@@ -38,10 +39,10 @@ if not the save not won't be able to be uploaded.
 
 look in the console and see if it says error troubleshoot with the error code.
 
-# **How it works**
+## **How it works**
 it uses m2tweop to notify a rust app to upload your saves to dropbox cloud then have other players download it.
 
-# Troubleshooting guide
+## Troubleshooting guide
 **401**: means your token is bad, regenerate it.
 
 **2** : File Not Found (pipe server not running OR pipe name mismatch).
